@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -54,7 +55,7 @@ public class BasicItemController {
 
     //상품 등록
     @PostMapping("/add")
-    public String PostAddItemModel(@ModelAttribute("item") Item item, Model model){
+    public String add(@ModelAttribute("item") Item item, RedirectAttributes redirectAttributes){
         /*
         * @ModelAttribute의 용도
         * 1. 모델 객체를 만들어주고
@@ -62,9 +63,11 @@ public class BasicItemController {
         * @ModelAttribute("item") 키 값 item
         * 만약 name속성을 안적어준다면 첫글자만 소문자로 담기게된다
         * */
-         itemRepository.save(item);
-        //model.addAttribute("item", item);
-        return "redirect:/basic/item"; // 새로 고침을 예방하기위해서
+        Item savedItem = itemRepository.save(item);
+        redirectAttributes.addAttribute("itemId", savedItem.getId());
+        redirectAttributes.addAttribute("status", true);// 등록을 하면 보여주기위해서
+        return "redirect:/basic/items/{itemId}";
+        // 새로 고침을 예방하기위해서
         /*웹 브라우저의 새로 고침은 마지막에 서버에 전송한 데이터를 다시 전송한다.
         새로 고침 문제를 해결하려면 상품 저장 후에 뷰 템플릿으로 이동하는 것이 아니라, 상품 상세 화면으로
         리다이렉트를 호출해주면 된다.
