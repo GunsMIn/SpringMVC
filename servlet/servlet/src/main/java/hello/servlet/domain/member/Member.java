@@ -8,13 +8,11 @@ import lombok.Setter;
 @Setter
 public class Member {
 
-    private Long id;
+    private Long id; // 식별자 id값
     private String username;
     private int age;
 
-    public Member() {
-
-    }
+    public Member() {;}
 
     public Member(String username, int age) {
         this.username = username;
