@@ -13,6 +13,9 @@ public class MemberFormControllerV2 implements ControllerV2 {
 
     @Override
     public MyView process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+       //  MyView myView = new MyView("/WEB-INF/views/new-form.jsp");
+        // return myView;
         return new MyView("/WEB-INF/views/new-form.jsp");
     }
 }
