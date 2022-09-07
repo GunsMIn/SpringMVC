@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 //컨트롤러의 개념에서 확장
-public class ControllerV4HandlerAdapter implements MyHandlerAdapter {
+public class ControllerV3HandlerAdapter implements MyHandlerAdapter {
 
     @Override
     public boolean supports(Object handler) {
@@ -23,7 +23,7 @@ public class ControllerV4HandlerAdapter implements MyHandlerAdapter {
     @Override
     public ModelView handle(HttpServletRequest request, HttpServletResponse response, Object handler) throws ServletException, IOException {
         //supports() 에서 controller를 필터링해주었다.
-        ControllerV3 controller = (ControllerV3) handler;
+        ControllerV3 controller = (ControllerV3)handler;
 
         Map<String, String> paramMap = createParamMap(request);
         ModelView mv = controller.process(paramMap);

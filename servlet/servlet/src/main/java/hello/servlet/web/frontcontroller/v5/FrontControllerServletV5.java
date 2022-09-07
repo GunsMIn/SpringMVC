@@ -8,7 +8,8 @@ import hello.servlet.web.frontcontroller.v3.controller.MemberSaveControllerV3;
 import hello.servlet.web.frontcontroller.v4.controller.MemberFormControllerV4;
 import hello.servlet.web.frontcontroller.v4.controller.MemberListControllerV4;
 import hello.servlet.web.frontcontroller.v4.controller.MemberSaveController;
-import hello.servlet.web.frontcontroller.v5.adapter.ControllerV4HandlerAdapter;
+import hello.servlet.web.frontcontroller.v5.adapter.ControllerV3HandlerAdapter;
+import hello.servlet.web.frontcontroller.v5.adapter.ControllerV4HandelerAdapter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,11 +30,15 @@ public class FrontControllerServletV5 extends HttpServlet {
 
     private final List<MyHandlerAdapter> handlerAdapters = new ArrayList<>();
 
+
     public FrontControllerServletV5() {
         initHandlerMappingMap();
         initHandlerAdapters();
     }
+
+
     private void initHandlerMappingMap() {
+        //각기 다른 컨트롤러를 추가할 수 있다.
         //V3추가
         handlerMappingMap.put("/front-controller/v5/v3/members/new-form", new MemberFormControllerV3());
         handlerMappingMap.put("/front-controller/v5/v3/members/save", new MemberSaveControllerV3());
@@ -44,14 +49,15 @@ public class FrontControllerServletV5 extends HttpServlet {
         handlerMappingMap.put("/front-controller/v5/v4/members/save", new MemberSaveController());
         handlerMappingMap.put("/front-controller/v5/v4/members", new MemberListControllerV4());
     }
+    //
     private void initHandlerAdapters() {
-        handlerAdapters.add(new ControllerV4HandlerAdapter());
-        handlerAdapters.add(new ControllerV4HandlerAdapter());
+        handlerAdapters.add(new ControllerV3HandlerAdapter());
+        handlerAdapters.add(new ControllerV4HandelerAdapter());
     }
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        //이 메소드를 통해서 요청된 url의 handler가 도출되었다
         Object handler = getHandler(request);
 
         if (handler == null) {
@@ -76,6 +82,7 @@ public class FrontControllerServletV5 extends HttpServlet {
 
 
     private MyHandlerAdapter getHandlerAdapter(Object handler) {
+        //맞는 핸들러 어뎁터를 찾는과정
         for (MyHandlerAdapter adapter : handlerAdapters) {
             if (adapter.supports(handler)) {
                 return adapter;

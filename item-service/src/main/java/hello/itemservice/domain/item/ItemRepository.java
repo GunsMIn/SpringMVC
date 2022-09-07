@@ -31,8 +31,8 @@ public class ItemRepository {
         return new ArrayList<>(store.values());
     }
 
-    public void update(Long itenId, Item updateParam){
-        Item findItem = findOne(itenId);
+    public void update(Long itemId, Item updateParam){
+        Item findItem = findOne(itemId);
         findItem.setItemName(updateParam.getItemName());
         findItem.setQuantity(updateParam.getQuantity());
         findItem.setPrice(updateParam.getPrice());

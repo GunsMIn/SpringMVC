@@ -1,6 +1,7 @@
 package hello.itemservice.web.basic;
 
 import hello.itemservice.domain.item.Item;
+import hello.itemservice.domain.item.ItemForm;
 import hello.itemservice.domain.item.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +21,7 @@ public class BasicItemController {
 
     private final ItemRepository itemRepository;
 
-    //상품 목록 페이지 이동
+    //상품 목록 페이지 이동 ( 여기서는 메인페이지 역할)
     @GetMapping
     public String items(Model model){
         List<Item> items = itemRepository.findAll();
@@ -35,6 +36,7 @@ public class BasicItemController {
         return "basic/item";
     }
 
+    //상품 등록 페이지로 이동
     @GetMapping("/add")
     public String addItem(){
         return "basic/addForm";
@@ -57,16 +59,18 @@ public class BasicItemController {
     @PostMapping("/add")
     public String add(@ModelAttribute("item") Item item, RedirectAttributes redirectAttributes){
         /*
-        * @ModelAttribute의 용도
-        * 1. 모델 객체를 만들어주고
-        * 2. model.addAttribute까지 해줄 수 있다
-        * @ModelAttribute("item") 키 값 item
-        * 만약 name속성을 안적어준다면 첫글자만 소문자로 담기게된다
-        * */
+         * @ModelAttribute의 용도
+         * 1. 모델 객체를 만들어주고
+         * 2. model.addAttribute까지 해줄 수 있다
+         * @ModelAttribute("item") 키 값 item
+         * 만약 name속성을 안적어준다면 첫글자만 소문자로 담기게된다
+         * */
         Item savedItem = itemRepository.save(item);
         redirectAttributes.addAttribute("itemId", savedItem.getId());
         redirectAttributes.addAttribute("status", true);// 등록을 하면 보여주기위해서
-        return "redirect:/basic/items/{itemId}";
+        return "redirect:/basic/items/{itemId}"; // redirectAttributes를 이용해서 url에 전하게되면
+        //써져있다면 path변수로 넘어가고 안쓰면 쿼리스트링으로 넘어간다.
+
         // 새로 고침을 예방하기위해서
         /*웹 브라우저의 새로 고침은 마지막에 서버에 전송한 데이터를 다시 전송한다.
         새로 고침 문제를 해결하려면 상품 저장 후에 뷰 템플릿으로 이동하는 것이 아니라, 상품 상세 화면으로
@@ -98,14 +102,13 @@ public class BasicItemController {
         model.addAttribute("item",item);
         return "/basic/editForm";
     }
+    //상품 수정 프로세스
     @PostMapping("/{itemId}/edit")
     public String update(@PathVariable Long itemId, @ModelAttribute Item updateItem){
         //@ModelAttribute에서 name를 생략하면 앞글자가 소문자인 item으로 된다.
         itemRepository.update(itemId,updateItem);
         return "redirect:/basic/items/{itemId}";
     }
-
-
 
     @PostConstruct
     public void init() {
