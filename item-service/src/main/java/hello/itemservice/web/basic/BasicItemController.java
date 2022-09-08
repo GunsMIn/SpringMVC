@@ -55,6 +55,8 @@ public class BasicItemController {
         return "basic/item";
     }
 
+    // !!!!!!! 중요 !!!!!! 새로 고침이란 내가 마지막에 했던 행위를 다시 하는 것이다.
+    // 따라서 prg를 안해주면 post가 반복된다. redirect로 get url을 가게해줄 것
     //상품 등록
     @PostMapping("/add")
     public String add(@ModelAttribute("item") Item item, RedirectAttributes redirectAttributes){
@@ -68,6 +70,7 @@ public class BasicItemController {
         Item savedItem = itemRepository.save(item);
         redirectAttributes.addAttribute("itemId", savedItem.getId());
         redirectAttributes.addAttribute("status", true);// 등록을 하면 보여주기위해서
+        //리다이렉트란 뭐다 ? 아이에 새로 다시 요청하는 것이다!!!!!!!!!
         return "redirect:/basic/items/{itemId}"; // redirectAttributes를 이용해서 url에 전하게되면
         //써져있다면 path변수로 넘어가고 안쓰면 쿼리스트링으로 넘어간다.
 
@@ -109,6 +112,11 @@ public class BasicItemController {
         itemRepository.update(itemId,updateItem);
         return "redirect:/basic/items/{itemId}";
     }
+
+
+
+
+
 
     @PostConstruct
     public void init() {

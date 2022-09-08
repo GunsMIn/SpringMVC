@@ -42,5 +42,21 @@ public class ItemRepositoryTest {
         Assertions.assertThat(all.size()).isEqualTo(2);
     }
 
+    @Test
+    public void update() throws Exception {
+        //given
+        Item item = new Item("피아노", 2000000, 30);
+        itemRepository.save(item);
+        Long id = item.getId();
+        //when
+        Item updateItem = new Item("기타", 1000000, 1000);
+        itemRepository.update(id,updateItem);
+        Item findItem = itemRepository.findOne(id);
+        //then
+        Assertions.assertThat(findItem.getItemName()).isEqualTo(item.getItemName());
+
+    }
+
+
 
 }

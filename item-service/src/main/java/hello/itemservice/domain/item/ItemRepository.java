@@ -14,9 +14,9 @@ public class ItemRepository {
     private static final Map<Long, Item> store = new HashMap<>();
     private static Long sequence = 0L;
 
-
+    //상품 저장 로직
     public Item save(Item item){
-        item.setId(sequence++);
+        item.setId(++sequence);
         store.put(item.getId(), item);
         return item;
     }
