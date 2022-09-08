@@ -42,7 +42,7 @@ Spring MVC패턴과 요청,응답방식과 HTTP API
         요청 파라미터의 이름으로 HelloData 객체의 프로퍼티를 찾는다. 그리고 해당 프로퍼티의 setter를
         호출해서 파라미터의 값을 입력(바인딩) 한다.
         @RequestBody 를 사용하면 HTTP 메시지 바디 정보를 편리하게 조회할 수 있다.
-        메세지 컨버터로 JSON으로 받는것을 객체로 또는 STRING으로 변환해서 받을 수 있다.<br<br><br>
+        메세지 컨버터로 JSON으로 받는것을 객체로 또는 STRING으로 변환해서 받을 수 있다.<br<br><br><br>
 <b>패키지명 :item-service</b><br><br>
 <b>-day 5</b>: 스프링 MVC로 간단한 서비스 제작하기 <br>
         1.@ModelAttribute - 요청 파라미터 처리
