@@ -51,7 +51,7 @@ Spring MVC패턴과 요청,응답방식과 HTTP API
         @ModelAttribute 는 중요한 한가지 기능이 더 있는데, 바로 모델(Model)에 @ModelAttribute 로
         지정한 객체를 자동으로 넣어준다. 지금 코드를 보면 model.addAttribute("item", item) 가 주석처리
         되어 있어도 잘 동작하는 것을 확인할 수 있다.<br>
-        PRG Post/Redirect/Get : 새로고침하면 마지막에 수행한 동작을 다시 수행하게 되는데 post 방식에서는 이를 방지하기 위해
+        3.PRG Post/Redirect/Get : 새로고침하면 마지막에 수행한 동작을 다시 수행하게 되는데 post 방식에서는 이를 방지하기 위해
         redirect를 통해 get방식으로 다시 요청하게 만들어주었다
         
 <br><br><b>🎈학습에 대하여 느낌점</b><br>
